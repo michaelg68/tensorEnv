@@ -5,6 +5,9 @@ import numpy as np
 import sklearn
 from sklearn import linear_model
 from sklearn.utils import shuffle
+import matplotlib as mp
+from matplotlib import style
+import pickle
 
 data = pd.read_csv("student-mat.csv", sep=";")
 
@@ -29,6 +32,14 @@ linear = linear_model.LinearRegression()
 
 #Training our model:
 linear.fit(x_train, y_train)
+
+#Storing our trained model called "linear" in a file
+with open("studentgrades.pickle", "wb") as picklefile:
+    pickle.dump(linear, picklefile)
+
+
+pickle_in = open("studentgrades.pickle", "rb")
+linear = pickle.load(pickle_in)
 
 #Verifying how accurate is our model:
 acc = linear.score(x_test, y_test)
